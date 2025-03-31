@@ -40,3 +40,12 @@ img {
 p {
   margin-top: 0.5rem;
 }
+
+.inputContainer {
+  margin: 2rem 0;
+}
+
+input {
+  width: 200px;
+  border-radius: 5px;
+}
