@@ -1,4 +1,17 @@
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
+
+const PoliticiansCard = React.memo(({ name, image, position, biography }) => {
+  console.log("Render PoliticiansCards :", name)
+  return (
+    <>
+      <div className="col">
+        <h3>{name}</h3>
+        <img src={image} alt="" />
+        <span><strong>{position}</strong></span>
+        <p>{biography}</p>
+      </div>
+    </>)
+})
 
 function App() {
 
@@ -10,7 +23,6 @@ function App() {
       const response = await fetch("https://boolean-spec-frontend.vercel.app/freetestapi/politicians")
       const data = await response.json()
       setPoliticians(data)
-      console.log(data)
     } catch (err) {
       console.error(err);
     }
@@ -38,12 +50,7 @@ function App() {
         </div>
         <div className="row">
           {filteredResults && filteredResults.map((p, id) =>
-            <div className="col" key={id}>
-              <h3>{p.name}</h3>
-              <img src={p.image} alt="" />
-              <span><strong>{p.position}</strong></span>
-              <p>{p.biography}</p>
-            </div>
+            <PoliticiansCard key={id} {...p} />
           )}
         </div>
       </div>
