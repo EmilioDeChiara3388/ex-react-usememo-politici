@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 
 const PoliticiansCard = React.memo(({ name, image, position, biography }) => {
   console.log("Render PoliticiansCards :", name)
@@ -6,7 +6,7 @@ const PoliticiansCard = React.memo(({ name, image, position, biography }) => {
     <>
       <div className="col">
         <h3>{name}</h3>
-        <img src={image} alt="" />
+        <img src={image} alt={name} />
         <span><strong>{position}</strong></span>
         <p>{biography}</p>
       </div>
@@ -32,9 +32,11 @@ function App() {
     getList();
   }, [])
 
-  const filteredResults = search ? politicians.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()) ||
-    p.biography.toLowerCase().includes(search.toLowerCase())
-  ) : politicians;
+  const filteredResults = useMemo(() => {
+    return politicians.filter(politician => politician.name.toLowerCase().includes(search.toLowerCase()) ||
+      politician.biography.toLowerCase().includes(search.toLowerCase())
+    )
+  }, [politicians, search])
 
   return (
     <>
